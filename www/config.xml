@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- config.xml reference: https://build.phonegap.com/docs/config-xml -->
+<widget xmlns     = "http://www.w3.org/ns/widgets"
+        xmlns:gap = "http://phonegap.com/ns/1.0"
+        id        = "com.albpower.testApp"
+        versionCode = "1"
+        version   = "1.0.0">
+
+    <name>NetworkTest Events</name>
+    <description>
+        Network test
+    </description>
+	
+    <author email="afrim.a@msn.com" href="http://afrimazizi.tk">
+        Afrim Azizi
+    </author>
+
+	<preference name="phonegap-version"  value="3.7.0" />          <!-- all: current version of PhoneGap -->
+	
+	
+    <!-- Plugins -->
+   <gap:plugin name="org.apache.cordova.network-information" version="0.2.12" />
+    
+	<!-- Define app icon for each platform. -->
+    <icon src="icon.png" />
+	
+    <content src="index.html" />
+    <access origin="*" />
+</widget>
