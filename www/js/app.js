@@ -39,6 +39,9 @@ $stateProvider.state('featured',{
 
 .run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {
+      document.addEventListener("offline", function(){alert("App went offline");}, false);
+      document.addEventListener("online", function(){alert("App went online");}, false);
+      
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
     // for form inputs)
     if(window.cordova && window.cordova.plugins.Keyboard) {
@@ -47,18 +50,8 @@ $stateProvider.state('featured',{
     if(window.StatusBar) {
       StatusBar.styleDefault();
     }
-      document.addEventListener("offline", onOffline, false);
-      document.addEventListener("online", onOnline, false);
       
-      function onOffline(){
-        console.log("App went offline");
-          alert("App went offline");
-      }
-      
-      function onOnline(){
-        console.log("App went online");
-          alert("App went online");
-      }
+   
   });
 })
 
