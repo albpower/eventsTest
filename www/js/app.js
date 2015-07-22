@@ -39,6 +39,10 @@ $stateProvider.state('featured',{
 
 .run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {
+    // Android customization
+    cordova.plugins.backgroundMode.setDefaults({ text:'Doing heavy tasks.'});
+    // Enable background mode
+    cordova.plugins.backgroundMode.enable();
       document.addEventListener("offline", function(){alert("App went offline");}, false);
       document.addEventListener("online", function(){alert("App went online");}, false);
       
@@ -50,7 +54,6 @@ $stateProvider.state('featured',{
     if(window.StatusBar) {
       StatusBar.styleDefault();
     }
-      
    
   });
 })
