@@ -4,11 +4,17 @@
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
 
-//js.src = "//connect.facebook.net/en_US/sdk.js";
 var app = angular.module('starter', ['ionic'])
 
-app.config(function($stateProvider, $urlRouterProvider) {
-	$stateProvider.state('home', {
+app.config(function($stateProvider, $urlRouterProvider, $sceProvider, $sceDelegateProvider) {
+ $sceProvider.enabled(false);
+ $sceDelegateProvider.resourceUrlWhitelist([
+    // Allow same origin resource loads.
+    'self',
+    // Allow loading from our assets domain.  Notice the difference between * and **.
+    'https://video.xx.fbcdn.net/**'
+  ]);
+$stateProvider.state('home', {
   url: '/home',
   views: {
     home: {
@@ -37,14 +43,18 @@ $stateProvider.state('featured',{
 
 })
 
+
+
 .run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {
     // Android customization
-    cordova.plugins.backgroundMode.setDefaults({ text:'Doing heavy tasks.'});
+    cordova.plugins.backgroundMode.setDefaults({ text:'Jeni duke degjuar Radio Pendimin.'});
     // Enable background mode
     cordova.plugins.backgroundMode.enable();
       document.addEventListener("offline", function(){alert("App went offline");}, false);
-      document.addEventListener("online", function(){alert("App went online");}, false);
+      document.addEventListener("online", function(){
+          document.getElementById("audio-player").play();
+          }, false);
       
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
     // for form inputs)
@@ -58,7 +68,7 @@ $stateProvider.state('featured',{
   });
 })
 
-.controller('ListaCtrl',function($scope,$http){
+.controller('ListaCtrl',function($scope){
 	$http.get('https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&playlistId=PLueTNPnrNvSHjlZcJb4-Yt6LXUwa53M_p&key=AIzaSyDhDZjburmzpaoH39Uj4dnU6X_GRLbCVW0').then(function(resp) {
     console.log('Success', resp);
 	$scope.items = resp.data.items;
@@ -73,29 +83,44 @@ $stateProvider.state('featured',{
   })
 })
 
-app.controller('FacebookCtrl',function($scope){
-    $window.fbAsyncInit = function() {
-        FB.init({ 
-          appId: '575059922614316',
-          status: true, 
-          cookie: true, 
-          xfbml: true,
-          version: 'v2.0'
-        });
-    };
+.controller('FacebookCtrl',function($scope,$http){
+    $http.get('https://graph.facebook.com/radioopendimi/feed?fields=full_picture,type,source,message,caption,name,link,likes,shares&access_token=575059922614316|bcc9e098f7c4fbf0d19171bbf6d6a6b7').then(function(resp){
+        $scope.news = resp.data.data;
+        console.log('Success: ',resp);
+    }, function(err){
+        console.error('Error: ',err);
+    });
+    //Graph API Get Request: https://graph.facebook.com/radioopendimi/feed?access_token=575059922614316|bcc9e098f7c4fbf0d19171bbf6d6a6b7
     
-    $scope.feed = function(){
-        /* make the API call */
-        FB.api(
-            "/radioopendimi",
-            function (response) {
-              if (response && !response.error) {
-                /* handle the result */
-                  Console.log("Loading successfully");
-              }
-            }
-        );
-   };
+    $scope.getSrc = function(url){
+        var res = url.replace("autoplay=1","autoplay=0");
+        return res;
+    }
+    
+    $scope.channel1 = false;
+    $scope.channel2 = false;
+    
+    $scope.play = function(url,kanali){
+      document.getElementById("audio-player").src = url;
+      document.getElementById("audio-player").play();
+      console.log(kanali);
+     
+      if (kanali == "1"){
+          $scope.channel1 = true;
+          $scope.channel2 = false;
+          console.log("1st if ID");
+      } else if (kanali == "2"){
+          $scope.channel1 = false;
+          $scope.channel2 = true;
+          console.log("2nd if");
+      }
+    }
+    
+    
+    $scope.stop = function(){
+        document.getElementById("audio-player").pause();
+        document.getElementById("audio-player").src = "";
+    }
 });
 
 
