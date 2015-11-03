@@ -143,19 +143,21 @@ $stateProvider.state('featured',{
         document.getElementById("audio-player").src = "";
     }
     
-//    /* Cordova Streaming PLugin */
-//      var audioUrl = 'http://85.93.88.146:8000/;$type=mp3';
-//// Play an audio file with options (all options optional)
-//  var options = {
-//    bgColor: "#eee",
-//    successCallback: function() {
-//      console.log("Player closed without error.");
-//    },
-//    errorCallback: function(errMsg) {
-//      console.log("Error! " + errMsg);
-//    }
-//  };
-//  window.plugins.streamingMedia.playAudio(audioUrl, options);
+    /* Cordova Streaming PLugin */
+   $scope.streamAudio = function() {
+    var audioUrl = 'http://85.93.88.146:8000/;$type=mp3';
+  // Play an audio file with options (all options optional)
+   var options = {
+    bgColor: "#eee",
+    successCallback: function() {
+      console.log("Player closed without error.");
+    },
+    errorCallback: function(errMsg) {
+      console.log("Error! " + errMsg);
+    }
+  };
+  window.plugins.streamingMedia.playAudio(audioUrl, options);
+   }
 });
 
 
