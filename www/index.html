@@ -88,7 +88,7 @@
 			</label>
            
            <!-- Pull to refresh -->
-           <ion-refresher on-refresh="refresh()"></ion-refresher>
+           <ion-refresher pulling-text="Tërhiqe për freskim" on-refresh="refresh()"></ion-refresher>
            
            <ion-list ng-repeat="item in feed | filter:query | limitTo:20">
 		   <ion-item  ng-if="item.type == 'photo'">
