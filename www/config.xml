@@ -20,7 +20,7 @@
 	
 	
     <!-- Plugins -->
-   <gap:plugin name="com.hutchind.cordova.plugins.streamingmedia"  />
+   <gap:plugin name="com.mcsqd.cordova.plugins.streamingmedia" version="0.1.4" />
     
 	<!-- Define app icon for each platform. -->
     <icon src="icon.png" />
