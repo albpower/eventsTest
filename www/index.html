@@ -59,12 +59,12 @@
             </div>
             <audio src="" id="audio-player"></audio>
             <ion-list class="list list-inset" >
-                <ion-item  class="item item-icon-left" ng-click="play('http://217.172.180.29:8000/;$type=mp3','1')">
+                <ion-item  class="item item-icon-left" ng-click="play('http://85.93.88.146:8000/;$type=mp3','1')">
                      <i class="icon ion-play"></i>
                      <h2 class="padding">Kanali 1 </h2> 
                 </ion-item>
                 
-                <ion-item  class="item item-icon-left" ng-click="play('http://217.172.180.29:8002/;$type=mp3','2')">
+                <ion-item  class="item item-icon-left" ng-click="play('http://85.93.88.146:8002/;$type=mp3','2')">
                      <i class="icon ion-play"></i>
                      <h2 class="padding">Kanali 2 </h2> 
                 </ion-item>
@@ -86,7 +86,11 @@
 				<i class="icon ion-search placeholder-icon"></i>
 				<input type="text" placeholder="Search..." ng-model="query" >
 			</label>
-            <ion-list ng-repeat="item in news | filter:query | limitTo:20">
+           
+           <!-- Pull to refresh -->
+           <ion-refresher on-refresh="refresh()"></ion-refresher>
+           
+           <ion-list ng-repeat="item in feed | filter:query | limitTo:20">
 		   <ion-item  ng-if="item.type == 'photo'">
                <h2 >{{item.name}}</h2>
                <p class="wrap-text">{{item.message}}</p>
@@ -130,7 +134,7 @@
 		</ion-content>
 	  </ion-view>
 	</script>
-    <script language="javascript" type="text/javascript" src="http://217.172.180.29:2199/system/streaminfo.js"></script>
-	<script language="javascript" type="text/javascript" src="http://217.172.180.29:2199/system/recenttracks.js"></script>
+    <script language="javascript" type="text/javascript" src="http://85.93.88.146:2199/system/streaminfo.js"></script>
+	<script language="javascript" type="text/javascript" src="http://85.93.88.146:2199/system/recenttracks.js"></script>
   </body>
 </html>

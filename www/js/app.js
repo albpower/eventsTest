@@ -83,14 +83,35 @@ $stateProvider.state('featured',{
   })
 })
 
-.controller('FacebookCtrl',function($scope,$http){
+.controller('FacebookCtrl',function($scope,$http,$timeout){
+    $scope.feed  = {};
     $http.get('https://graph.facebook.com/radioopendimi/feed?fields=full_picture,type,source,message,caption,name,link,likes,shares&access_token=575059922614316|bcc9e098f7c4fbf0d19171bbf6d6a6b7').then(function(resp){
         $scope.news = resp.data.data;
+        $scope.feed = resp.data.data;
         console.log('Success: ',resp);
     }, function(err){
         console.error('Error: ',err);
     });
     //Graph API Get Request: https://graph.facebook.com/radioopendimi/feed?access_token=575059922614316|bcc9e098f7c4fbf0d19171bbf6d6a6b7
+    
+    $scope.refresh = function (){
+        console.log('Refreshing!');
+        $timeout(function() {
+      //simulate async response
+      $http.get('https://graph.facebook.com/radioopendimi/feed?fields=full_picture,type,source,message,caption,name,link,likes,shares&access_token=575059922614316|bcc9e098f7c4fbf0d19171bbf6d6a6b7').then(function(resp){
+        //$scope.news = resp.data.data;
+        $scope.feed = resp.data.data;
+        console.log('Success: ',resp);
+    }, function(err){
+        console.error('Error: ',err);
+    });
+
+      //Stop the ion-refresher from spinning
+      $scope.$broadcast('scroll.refreshComplete');
+    
+    }, 1000); //end timeout
+    
+    };
     
     $scope.getSrc = function(url){
         var res = url.replace("autoplay=1","autoplay=0");
@@ -108,11 +129,11 @@ $stateProvider.state('featured',{
       if (kanali == "1"){
           $scope.channel1 = true;
           $scope.channel2 = false;
-          console.log("1st if ID");
+          //console.log("1st if ID");
       } else if (kanali == "2"){
           $scope.channel1 = false;
           $scope.channel2 = true;
-          console.log("2nd if");
+         // console.log("2nd if");
       }
     }
     
@@ -121,6 +142,20 @@ $stateProvider.state('featured',{
         document.getElementById("audio-player").pause();
         document.getElementById("audio-player").src = "";
     }
+    
+    /* Cordova Streaming PLugin */
+      var audioUrl = 'http://85.93.88.146:8000/;$type=mp3';
+// Play an audio file with options (all options optional)
+  var options = {
+    bgColor: "#eee",
+    successCallback: function() {
+      console.log("Player closed without error.");
+    },
+    errorCallback: function(errMsg) {
+      console.log("Error! " + errMsg);
+    }
+  };
+  window.plugins.streamingMedia.playAudio(audioUrl, options);
 });
 
 
