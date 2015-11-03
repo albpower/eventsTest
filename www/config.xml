@@ -16,7 +16,7 @@
         Afrim Azizi
     </author>
 
-	<preference name="phonegap-version"  value="cli-5.2.0." />          <!-- all: current version of PhoneGap -->
+	<preference name="phonegap-version"  value="cli-5.2.0" />          <!-- all: current version of PhoneGap -->
 	
 	
     <!-- Plugins -->
